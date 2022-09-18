@@ -2,6 +2,7 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 import { Home } from "Pages/Home";
 import { App2Page } from "Pages/App2";
+import { App3Page } from "Pages/App3";
 import { ErrorPage } from "Pages/ErrorPage";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
@@ -17,6 +18,9 @@ const DummySideBar = () => {
             </li>
             <li>
               <a href={`/page2`}>Page2</a>
+            </li>
+            <li>
+              <a href={`/page3`}>Page3</a>
             </li>
           </ul>
         </nav>
@@ -35,6 +39,11 @@ const router = createBrowserRouter([
   {
     path: "/page2",
     element: <App2Page />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/page3",
+    element: <App3Page />,
     errorElement: <ErrorPage />,
   },
 ]);
