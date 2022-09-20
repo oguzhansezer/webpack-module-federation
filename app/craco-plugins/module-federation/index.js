@@ -1,6 +1,7 @@
 const webpack = require("webpack");
 const paths = require("react-scripts/config/paths");
-
+const BundleAnalyzerPlugin =
+  require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 const getModuleFederationConfigPath = (additionalPaths = []) => {
   const path = require("path");
   const fs = require("fs");
@@ -16,7 +17,7 @@ const getModuleFederationConfigPath = (additionalPaths = []) => {
     .filter(fs.existsSync)
     .shift();
 };
-
+console.log(process.env.ANALYZE_MODE, "mylog");
 module.exports = {
   overrideWebpackConfig: ({ webpackConfig }) => {
     const moduleFederationConfigPath = getModuleFederationConfigPath();
@@ -40,6 +41,12 @@ module.exports = {
           require(moduleFederationConfigPath)
         ),
       ];
+      if (process.env.ANALYZE_MODE)
+        webpackConfig.plugins.push(
+          new BundleAnalyzerPlugin({
+            analyzerMode: "server",
+          })
+        );
     }
     return webpackConfig;
   },
